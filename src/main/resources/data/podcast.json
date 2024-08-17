@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Podcast 1",
+    "desc": "Podcast short desc",
+    "link": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3",
+    "image": "https://picsum.photos/200/300",
+    "lang": "English",
+    "podcast_group": "Abhishikt 1"
+  },
+  {
+    "name": "Podcast 2",
+    "desc": "Podcast short desc",
+    "link": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3",
+    "image": "https://picsum.photos/200/300",
+    "lang": "English",
+    "podcast_group": "Abhishikt 2"
+  },
+  {
+    "name": "Podcast 3",
+    "desc": "Podcast short desc",
+    "link": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3",
+    "image": "https://picsum.photos/200/300",
+    "lang": "English",
+    "podcast_group": "Abhishikt 3"
+  },
+  {
+    "name": "Podcast 1",
+    "desc": "Podcast short desc",
+    "link": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3",
+    "image": "https://picsum.photos/200/300",
+    "lang": "Marathi",
+    "podcast_group": "Abhishikt 1"
+  },
+  {
+    "name": "Podcast 2",
+    "desc": "Podcast short desc",
+    "link": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3",
+    "image": "https://picsum.photos/200/300",
+    "lang": "Marathi",
+    "podcast_group": "Abhishikt 2"
+  },
+  {
+    "name": "Podcast 3",
+    "desc": "Podcast short desc",
+    "link": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3",
+    "image": "https://picsum.photos/200/300",
+    "lang": "Marathi",
+    "podcast_group": "Abhishikt 3"
+  },
+  {
+    "name": "Podcast 1",
+    "desc": "Podcast short desc",
+    "link": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3",
+    "image": "https://picsum.photos/200/300",
+    "lang": "Hindi",
+    "podcast_group": "Abhishikt 1"
+  },
+  {
+    "name": "Podcast 2",
+    "desc": "Podcast short desc",
+    "link": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3",
+    "image": "https://picsum.photos/200/300",
+    "lang": "Hindi",
+    "podcast_group": "Abhishikt 2"
+  },
+  {
+    "name": "Podcast 3",
+    "desc": "Podcast short desc",
+    "link": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3",
+    "image": "https://picsum.photos/200/300",
+    "lang": "Hindi",
+    "podcast_group": "Abhishikt 3"
+  }
+]
