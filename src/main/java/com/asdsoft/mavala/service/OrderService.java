@@ -58,7 +58,7 @@ public class OrderService {
         if (couponRepository.findById(coupon).isPresent()) {
             return new Price(0, true);
         }
-        return new Price(199, false);    }
+        return new Price(1, false);    }
 
     public Order checkOrder(UserMawala userMawala, String orderId) throws RazorpayException {
         Order order = orderRepository.getReferenceById(orderId);
