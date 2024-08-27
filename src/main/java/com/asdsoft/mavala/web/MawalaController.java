@@ -132,7 +132,7 @@ public class MawalaController extends BaseController {
     @GetMapping("/dashboard")
     @ResponseBody
     public Dashboard getDashboard() {
-        return new Dashboard(dashboardService.getDashBoardCards(), dashboardService.getDynamicCard());
+        return new Dashboard(dashboardService.getDashBoardCards(), dashboardService.getDynamicCard(getUser()));
     }
 
     @GetMapping("/dashboard/dynamic/card/{id}")

@@ -1,9 +1,7 @@
 package com.asdsoft.mavala.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +12,8 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Getter
+@Setter
 public class UserMawala {
     @Id
     private String firebaseId;
@@ -32,5 +32,5 @@ public class UserMawala {
     private String city;
     private String state;
     private String country;
-    private boolean locked;
+    private Boolean locked;
 }
