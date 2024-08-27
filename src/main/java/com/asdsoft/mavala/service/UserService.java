@@ -41,7 +41,7 @@ public class UserService {
         userMawala.setLast_name(userBoardRequest.getLast_name());
         userMawala.setAddress(userBoardRequest.getAddress());
         userMawala.setCity(userBoardRequest.getCity());
-        userMawala.setPincode(userBoardRequest.getPincode());
+        userMawala.setPinCode(userBoardRequest.getPincode());
         userMawala.setState(userBoardRequest.getState());
         userMawala.setCountry(userBoardRequest.getCountry());
         if (userBoardRequest.getBoardId() != null || userMawala.getBoardId() != null) {

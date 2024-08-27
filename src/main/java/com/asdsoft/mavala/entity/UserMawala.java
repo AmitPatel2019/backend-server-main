@@ -28,8 +28,9 @@ public class UserMawala {
     private String address;
     private String imageLink;
     private byte[] image;
-    private String pincode;
+    private String pinCode;
     private String city;
     private String state;
     private String country;
+    private boolean locked;
 }
