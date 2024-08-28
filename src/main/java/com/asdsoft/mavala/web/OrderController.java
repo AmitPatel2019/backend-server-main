@@ -1,6 +1,4 @@
 package com.asdsoft.mavala.web;
-
-
 import com.asdsoft.mavala.data.OrderResponse;
 import com.asdsoft.mavala.data.Price;
 import com.asdsoft.mavala.service.OrderService;
@@ -26,7 +24,6 @@ public class OrderController extends BaseController {
     public OrderResponse createOrder(@RequestParam(value = "coupon", required = false) String coupon) throws RazorpayException {
         if (StringUtils.isEmpty(coupon)){
             return new OrderResponse(orderService.createOrder(getUserData(), "N"));
-
         }
         return new OrderResponse(orderService.createOrder(getUserData(), coupon));
     }
