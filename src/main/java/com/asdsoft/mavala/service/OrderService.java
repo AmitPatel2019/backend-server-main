@@ -83,8 +83,7 @@ public class OrderService {
     public Order checkOrder(UserMawala userMawala, String orderId) throws RazorpayException {
         Order order = orderRepository.getReferenceById(orderId);
               if (order.getUser().getFirebaseId().equals(userMawala.getFirebaseId())) {
-                  razorPayService.getSuccessfulPaymentIdsByOrderId(order.getOrderId());
-            com.razorpay.Order razorPayOrder = razorPayService.checkOrderStatus(order);
+             com.razorpay.Order razorPayOrder = razorPayService.checkOrderStatus(order);
             order.setOrderStatus(razorPayOrder.get("status"));
             if (razorPayOrder.get("status").equals(ORDER_COMPLETED) ||
                     razorPayOrder.get("status").equals(ORDER_CAPTURED) ||
