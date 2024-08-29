@@ -89,7 +89,7 @@ public class DashboardService {
         boolean isLocked = userMawala.get().getLocked();
         return Arrays.asList(
                 new DynamicCard("1", "Mawala The Board game", "https://starfish-app-trwgh.ondigitalocean.app/Ticket/Mawala - The Board Game.jpg", "Explanation of the board game and various modes to play it", "video", true, isLocked),
-                new DynamicCard("2", "Shiv Shatak - Chronicles of ShivChhatrapati Maharaj", "https://starfish-app-trwgh.ondigitalocean.app/Ticket/100 Stories.jpg", "Brief historical context of 100 events from ShivChhatrapati's life", "audio", true, isLocked),
+                new DynamicCard("2", "Shiv Shatak - Chronicles of ShivChhatrapati Maharaj", "https://starfish-app-trwgh.ondigitalocean.app/Ticket/100 Stories.jpg", "Brief historical context of 100 events from ShivChhatrapati's life", "audio", true, false),
                 new DynamicCard("3", "Mawala - Online Curriculum", "https://starfish-app-trwgh.ondigitalocean.app/Ticket/Mawala Workshop.jpg", "Interesting and engaging way to learn unheard historical chapters and animations", "video", true, isLocked),
                 new DynamicCard("4", "Mawala - The Pandora", "https://starfish-app-trwgh.ondigitalocean.app/Ticket/War Stories.jpg", "Aspects of legends from the field about various topics of Shiv Era!", "video", true, isLocked),
                 new DynamicCard("5", "Battle of Swarajya", "https://starfish-app-trwgh.ondigitalocean.app/Ticket/War Stories.jpg", "Series of Docudramas to learn battles fought by ShivChhatrapati", "video", true, isLocked),

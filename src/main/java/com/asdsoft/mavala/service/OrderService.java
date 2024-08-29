@@ -1,5 +1,6 @@
 package com.asdsoft.mavala.service;
 
+import com.asdsoft.mavala.data.PaymentDetails;
 import com.asdsoft.mavala.data.Price;
 import com.asdsoft.mavala.entity.Order;
 import com.asdsoft.mavala.entity.UserMawala;
@@ -104,4 +105,38 @@ public class OrderService {
         }
     }
 
+    public Order checkOrderDetails(UserMawala userMawala, PaymentDetails paymentDetails) throws RazorpayException {
+       // Order order = orderRepository.getReferenceById(paymentDetails.getOrderId());
+        Order order = orderRepository.findById(paymentDetails.getOrderId())
+                .orElseThrow(() -> new RuntimeException("Order not found with ID: " + paymentDetails.getOrderId()));
+
+        if(userMawala.getFirebaseId()!=null){
+         //   com.razorpay.Order razorPayOrder = razorPayService.checkOrderStatus(order);
+            String url1=razorPayService.getPaymentDetailsByPaymentId(paymentDetails.getPaymentId());
+          //  order.setOrderStatus(razorPayOrder.get("status"));
+            if (url1.equals(ORDER_COMPLETED) ||
+                    url1.equals(ORDER_CAPTURED) ||
+                    url1.equals(ORDER_AUTHORIZED)) {
+                userMawala.setPremium(true);
+                userMawala.setLocked(false);
+                userRepository.save(userMawala);
+            }else{
+                userMawala.setLocked(true);
+                userRepository.save(userMawala);
+            }
+          //  log.info("userMawala: {}", userMawala);
+            order.setOrderStatus(url1);
+            order.setPaymentId(paymentDetails.getPaymentId());
+            log.info("Order: {}", order);
+            orderRepository.save(order);
+            return order;
+        } else {
+            throw new RuntimeException("Order Doesn't belong to the user");
+        }
+
+     }
+
+    public static boolean isNotNull(Object obj) {
+        return obj != null;
+    }
 }

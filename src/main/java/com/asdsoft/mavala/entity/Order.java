@@ -24,6 +24,7 @@ public class Order {
     private String coupon;
     private String orderStatus = "created";
     private Date created_at;
+    private String paymentId;
     int amount;
 
 }

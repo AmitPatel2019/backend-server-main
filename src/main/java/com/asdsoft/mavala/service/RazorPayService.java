@@ -7,7 +7,13 @@ import com.razorpay.RazorpayException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +23,12 @@ import java.util.Map;
 public class RazorPayService {
     @Autowired
     private RazorpayClient razorpayClient;
+
+    private final String baseUrl = "https://api.razorpay.com/v1/";
+    @Value("${razor_pay_key}")
+    private String razor_pay_key;
+    @Value("${razor_pay_sec}")
+    private String razor_pay_sec;
 
     public com.razorpay.Order createRazorPayOrder(Order order) throws RazorpayException {
         return razorpayClient.orders.create(getOrderDetails(order));
@@ -44,31 +56,44 @@ public class RazorPayService {
         }
         return 299;
     }
-/*    public List<String> getSuccessfulPaymentIdsByOrderId(String orderId) {
-        List<String> successfulPayments = new ArrayList<>();
-        try {
-            // Create a JSONObject and add orderId to it
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("order_id", "order_OqL8LxaHa108pU");
-           // Payment  payments1= razorpayClient.payments.fetch("pay_OqL8cbARSFGdS1");
-            // Fetch all payments associated with this order
-            List<Payment> payments = razorpayClient.payments.fetchAll(jsonObject);
 
-            // Check each payment's status and add only successful ones
-            for (Payment payment : payments) {
-                String paymentId = payment.get("id");
-                String paymentStatus = payment.get("status");
+    public String getPaymentsByOrderId(String orderId) {
+        String url = baseUrl + "orders/" + orderId + "/payments";
+        RestTemplate restTemplate = new RestTemplate();
 
-                // If payment status is 'captured', consider it a success and add to the list
-                if ("captured".equalsIgnoreCase(paymentStatus)) {
-                    successfulPayments.add("Payment ID: " + paymentId + " Status: Success");
-                }
-            }
+        // Create headers with Basic Auth
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBasicAuth(razor_pay_key, razor_pay_sec);
 
-        } catch (Exception e) {
-           // successfulPayments.add("Error fetching payment statuses.");
+        // Create an HttpEntity with the headers
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        // Make the GET request
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+
+        // Return the response body (JSON string)
+        return response.getBody();
+    }
+    public String getPaymentDetailsByPaymentId(String paymentId) {
+        String url = baseUrl + "payments/" + paymentId;
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Create headers with Basic Auth
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBasicAuth(razor_pay_key, razor_pay_sec);
+
+        // Create an HttpEntity with the headers
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        // Make the GET request
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+        if (response.getBody() ==null){
+            return null;
         }
-        return successfulPayments;
-    }*/
+        JSONObject jsonResponse = new JSONObject(response.getBody());
+
+        return jsonResponse.getString("status");
+    }
+
 
 }

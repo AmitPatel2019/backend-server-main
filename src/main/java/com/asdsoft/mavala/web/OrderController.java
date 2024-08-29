@@ -1,5 +1,6 @@
 package com.asdsoft.mavala.web;
 import com.asdsoft.mavala.data.OrderResponse;
+import com.asdsoft.mavala.data.PaymentDetails;
 import com.asdsoft.mavala.data.Price;
 import com.asdsoft.mavala.service.OrderService;
 import com.razorpay.RazorpayException;
@@ -32,4 +33,11 @@ public class OrderController extends BaseController {
     public OrderResponse checkOrder(@PathVariable("orderId") String orderId) throws RazorpayException {
         return new OrderResponse(orderService.checkOrder(getUserData(), orderId));
     }
+
+    @PostMapping("/payments")
+    public OrderResponse checkOrderDetails(@RequestBody PaymentDetails paymentDetails) throws RazorpayException {
+        return new OrderResponse(orderService.checkOrderDetails(getUserData(), paymentDetails));
+    }
+
+
 }
