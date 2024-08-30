@@ -16,4 +16,5 @@ import javax.persistence.Id;
 public class Coupon {
     @Id
     private String code;
+    private Integer usedCount;
 }

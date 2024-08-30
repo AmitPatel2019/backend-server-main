@@ -2,18 +2,19 @@ package com.asdsoft.mavala.service;
 
 import com.asdsoft.mavala.data.PaymentDetails;
 import com.asdsoft.mavala.data.Price;
+import com.asdsoft.mavala.entity.Coupon;
 import com.asdsoft.mavala.entity.Order;
 import com.asdsoft.mavala.entity.UserMawala;
 import com.asdsoft.mavala.repository.CouponRepository;
 import com.asdsoft.mavala.repository.OrderRepository;
 import com.asdsoft.mavala.repository.UserRepository;
+import com.asdsoft.mavala.utils.CommonUtil;
 import com.razorpay.RazorpayException;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,7 +39,13 @@ public class OrderService {
     public Order createOrder(UserMawala principal, String coupon) throws RazorpayException {
         Order order = new Order();
         order.setUser(principal);
-        order.setCoupon(coupon);
+        if (!CommonUtil.isNullOrEmpty(coupon)){
+            int count=checkCouponById(coupon);
+            if (count==1){
+               updateCouponCount(coupon, 1);
+                order.setCoupon(coupon);
+            }
+        }
         order.setReceiptId(UUID.randomUUID().toString());
         order.setAmount(getAmount(coupon) * 100);
         if (order.getAmount() == 0){
@@ -76,10 +83,20 @@ public class OrderService {
     }
 
     public Price getPrice(String coupon){
-        if (couponRepository.findById(coupon).isPresent()) {
+        if (!CommonUtil.isNullOrEmpty(coupon)){
+            int count=checkCouponById(coupon);
+            if (count==1){
+                return new Price(0, true);
+            }
+        }else {
             return new Price(399, true);
         }
-        return new Price(1, false);    }
+       /* if (couponRepository.findById(coupon).isPresent()) {
+            return new Price(399, true);
+        }
+        return new Price(1, false);  */
+        return new Price(399, true);
+    }
 
     public Order checkOrder(UserMawala userMawala, String orderId) throws RazorpayException {
         Order order = orderRepository.getReferenceById(orderId);
@@ -134,6 +151,39 @@ public class OrderService {
             throw new RuntimeException("Order Doesn't belong to the user");
         }
 
+     }
+
+     public Coupon findCouponByCode(String code){
+        Coupon coupon=couponRepository.findByCode(code);
+        if (!CommonUtil.isNullOrEmpty(coupon)){
+            return  coupon;
+        }
+        return null;
+     }
+
+     public Coupon updateCouponCount(String couponCode, int count){
+         Coupon coupon=couponRepository.findByCode(couponCode);
+         if (!CommonUtil.isNullOrEmpty(coupon)){
+             int totalCount = Optional.ofNullable(coupon.getUsedCount()).orElse(0) + count;
+             coupon.setUsedCount(totalCount);
+             return  coupon;
+         }
+         return null;
+     }
+
+     public int checkCouponById(String couponCode){
+         Coupon coupon=couponRepository.findByCode(couponCode);
+         if (!CommonUtil.isNullOrEmpty(coupon)){
+             if (couponCode.equals("AE2023")){
+                 if (CommonUtil.isNullOrEmpty(coupon.getUsedCount()) || coupon.getUsedCount() <= 1500){
+                     return 1;
+                 }
+             }
+             if (CommonUtil.isNullOrEmpty(coupon.getUsedCount()) || coupon.getUsedCount()== 0){
+                 return 1;
+             }
+         }
+        return 0;
      }
 
     public static boolean isNotNull(Object obj) {

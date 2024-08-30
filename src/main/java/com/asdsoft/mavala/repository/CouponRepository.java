@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, String> {
+
+    Coupon findByCode(String code);
+
 }

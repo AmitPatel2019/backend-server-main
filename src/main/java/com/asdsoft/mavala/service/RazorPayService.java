@@ -1,10 +1,8 @@
 package com.asdsoft.mavala.service;
 
 import com.asdsoft.mavala.entity.Order;
-import com.razorpay.Payment;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,9 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @Service
 public class RazorPayService {
@@ -93,6 +92,24 @@ public class RazorPayService {
         JSONObject jsonResponse = new JSONObject(response.getBody());
 
         return jsonResponse.getString("status");
+    }
+
+
+    public  boolean verifySignature(String orderId, String paymentId) {
+        try {
+            String payload = orderId + "|" + paymentId;
+
+            Mac mac = Mac.getInstance("HmacSHA256");
+            SecretKeySpec secretKeySpec = new SecretKeySpec(razor_pay_sec.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+            mac.init(secretKeySpec);
+
+            byte[] hash = mac.doFinal(payload.getBytes(StandardCharsets.UTF_8));
+            String generatedSignature = Base64.getEncoder().encodeToString(hash);
+
+            return generatedSignature.equals(razor_pay_key);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while verifying Razorpay signature", e);
+        }
     }
 
 
