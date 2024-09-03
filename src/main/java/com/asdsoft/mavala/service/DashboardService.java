@@ -66,7 +66,7 @@ public class DashboardService {
 
     public List<DynamicCard> getDynamicCard(Jwt user) {
        Optional<UserMawala> userMawala = userRepository.findById(user.getSubject());
-        if (!userMawala.isPresent()){
+          if (!userMawala.isPresent()){
             return Collections.emptyList();
         }
         log.info("userMawala {}", userMawala);

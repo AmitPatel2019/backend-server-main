@@ -68,9 +68,6 @@ public class OrderService {
             principal.setPremium(true);
             principal.setLocked(false);
             userRepository.save(principal);
-        }else{
-            principal.setLocked(true);
-            userRepository.save(principal);
         }
         return order;
     }
@@ -109,9 +106,6 @@ public class OrderService {
                 userMawala.setPremium(true);
                 userMawala.setLocked(false);
                 userRepository.save(userMawala);
-            }else{
-                userMawala.setLocked(true);
-                userRepository.save(userMawala);
             }
             log.info("userMawala: {}", userMawala);
             log.info("Order: {}", order);
@@ -136,9 +130,6 @@ public class OrderService {
                     url1.equals(ORDER_AUTHORIZED)) {
                 userMawala.setPremium(true);
                 userMawala.setLocked(false);
-                userRepository.save(userMawala);
-            }else{
-                userMawala.setLocked(true);
                 userRepository.save(userMawala);
             }
           //  log.info("userMawala: {}", userMawala);
