@@ -78,6 +78,7 @@ public class UserService {
     public boolean togglePremium(Jwt user) {
         UserMawala userMawalaObject = userRepository.findById(user.getSubject()).get();
         userMawalaObject.setPremium(true);
+        userMawalaObject.setLocked(false);
         userRepository.save(userMawalaObject);
         return userMawalaObject.isPremium();
     }

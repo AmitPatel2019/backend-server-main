@@ -50,6 +50,7 @@ public class OrderService {
         order.setAmount(getAmount(coupon) * 100);
         if (order.getAmount() == 0){
             principal.setPremium(true);
+            principal.setLocked(false);
             order.setAmount(100);
             userRepository.save(principal);
         }
